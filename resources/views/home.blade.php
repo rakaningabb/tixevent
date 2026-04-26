@@ -1,21 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TixEvent</title>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>Daftar Event</h1>
+@section('content')
 
-    @foreach($events as $event)
-        <div style="border:1px solid #ccc; margin:10px; padding:10px;">
-            <h2>{{ $event->title }}</h2>
-            <p>{{ $event->description }}</p>
-            <p>Harga: Rp {{ $event->price }}</p>
+<!-- HERO -->
+<div class="hero">
+    <h1>Temukan Event Seru Untukmu</h1>
+    <p>Berbagai event menarik menantimu. Pesan tiket sekarang!</p>
+</div>
 
-            <a href="/event/{{ $event->id }}">Lihat Detail</a>
-        </div>
-    @endforeach
+<!-- KATEGORI -->
+<div class="container kategori">
+    <h3>Kategori</h3>
 
-</body>
-</html>
+    <a href="/?category=all"><button>Semua</button></a>
+    <a href="/?category=1"><button>Seminar</button></a>
+    <a href="/?category=2"><button>Workshop</button></a>
+    <a href="/?category=3"><button>Konser</button></a>
+    <a href="/?category=4"><button>Lainnya</button></a>
+
+</div>
+
+<!-- EVENT TERBARU -->
+<div class="container">
+    <h3>Event Terbaru</h3>
+
+    @if($events->isEmpty())
+        <p>Belum ada event tersedia</p>
+    @endif
+
+    <div class="grid">
+        @foreach($events as $event)
+            <div class="card">
+                <h4>{{ $event->title }}</h4>
+
+                <p><b>Lokasi:</b> {{ $event->location }}</p>
+
+                <p>
+                    <b>Tanggal:</b>
+                    {{ \Carbon\Carbon::parse($event->event_date)->format('d M Y') }}
+                </p>
+
+                <p>
+                    <b>Harga:</b> Rp{{ number_format($event->price) }}
+                </p>
+
+                <a href="/detail/{{ $event->id }}">
+                    Lihat Detail
+                </a>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+@endsection
