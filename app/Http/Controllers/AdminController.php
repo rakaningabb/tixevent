@@ -9,8 +9,10 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $totalEvent = Event::count();
+        // 🔥 hitung total event
+        $totalEvents = Event::count();
 
-        return view('admin.dashboard', compact('totalEvent'));
+        // 🔥 kirim ke view
+        return view('admin.dashboard', compact('totalEvents'));
     }
 }
