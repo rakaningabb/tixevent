@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('event_images', function (Blueprint $table) {
-    $table->id();
+    $table->id('event_image_id');
 
-    $table->foreignId('event_id')->constrained()->onDelete('cascade');
+    $table->foreignId('event_id')->constrained('events','event_id')->cascadeOnDelete();
 
-    $table->string('image');
-
-    $table->timestamps();
+    $table->string('image_path');
+    $table->boolean('is_primary')->default(false);
+    $table->timestamp('created_at')->useCurrent();
 });
     }
 

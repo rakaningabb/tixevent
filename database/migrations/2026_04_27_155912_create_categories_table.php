@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
-    $table->id();
-
-    $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
-
-    $table->string('payment_proof'); // bukti upload
-    $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
-
+        Schema::create('categories', function (Blueprint $table) {
+    $table->id('category_id');
+    $table->string('name');
+    $table->string('slug');
+    $table->text('description')->nullable();
+    $table->enum('status', ['active','inactive'])->default('active');
     $table->timestamps();
 });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('categories');
     }
 };

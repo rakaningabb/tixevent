@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('orders', function (Blueprint $table) {
+    $table->id('order_id');
+    $table->string('order_code');
+
+    $table->foreignId('user_id')->constrained('users','user_id')->cascadeOnDelete();
+
+    $table->timestamp('order_date')->useCurrent();
+    $table->decimal('total_amount', 12, 2);
+
+    $table->enum('payment_method', ['transfer','ewallet','card','cod']);
+    $table->enum('order_status', ['pending','paid','cancelled'])->default('pending');
+
+    $table->timestamps();
+});
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('order_items');
+    }
+};

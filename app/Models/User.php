@@ -9,6 +9,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $primaryKey = 'user_id';
+
     protected $fillable = [
         'name',
         'email',
@@ -21,8 +23,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // 🔗 RELASI
-
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function events()
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(Event::class, 'user_id', 'user_id');
     }
 
     public function tickets()
